@@ -14,12 +14,15 @@ class Bootstrap {
 
     public function registerController():object {
 
-        if(!file_exists(CDIR.'/controller/'.$this->controller.'.php')){
-            echo CDIR.'/controller/'.$this->controller.'.php';
+        spl_autoload_register(function ($class_name) {
+            include CDIR.'/controllers/'.$class_name.'.php';
+        });
+
+        if(!file_exists(CDIR.'/controllers/'.$this->controller.'.php')){
             return $this->abort();
         }
 
-        require_once CDIR.'/controller/'.$this->controller.'.php';
+        require_once CDIR.'/controllers/'.$this->controller.'.php';
 
         if(!class_exists($this->controller)){
             return $this->abort();
@@ -28,6 +31,8 @@ class Bootstrap {
         if (!method_exists($this->controller,$this->action)){
             return $this->abort();
         }
+
+
 
         $controller =  new $this->controller();
 
