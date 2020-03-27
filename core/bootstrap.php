@@ -12,39 +12,29 @@ class Bootstrap {
         $this->id = (int) $req["id"];
     }
 
-    public function registerController():object {
+    public function registerController() {
 
         spl_autoload_register(function ($class_name) {
             include CDIR.'/controllers/'.$class_name.'.php';
         });
 
         if(!file_exists(CDIR.'/controllers/'.$this->controller.'.php')){
-            return $this->abort();
+            exit("404");
         }
 
         require_once CDIR.'/controllers/'.$this->controller.'.php';
 
         if(!class_exists($this->controller)){
-            return $this->abort();
+            exit("404");
         }
 
         if (!method_exists($this->controller,$this->action)){
-            return $this->abort();
+            exit("404");
         }
-
-
 
         $controller =  new $this->controller();
 
         return $controller->{$this->action}($this->id);
-
-    }
-
-    public function abort() : bool {
-
-        echo "404 page";
-
-        return NULL;
 
     }
 
