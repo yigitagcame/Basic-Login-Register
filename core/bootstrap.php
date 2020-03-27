@@ -32,6 +32,10 @@ class Bootstrap {
             exit("404");
         }
 
+        if(($this->action == "create" OR $this->action == "update") AND ! $_POST){
+            exit("404");
+        }
+
         $controller =  new $this->controller();
 
         return $controller->{$this->action}($this->id);
