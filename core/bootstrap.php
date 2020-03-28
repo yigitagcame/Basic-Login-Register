@@ -32,7 +32,7 @@ class Bootstrap {
             exit("404");
         }
 
-        if(($this->action == "create" OR $this->action == "update") AND ! $_POST){
+        if(($this->action == "create" OR $this->action == "update")  AND ! $_POST){
             exit("404");
         }
 

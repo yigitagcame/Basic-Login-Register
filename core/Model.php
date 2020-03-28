@@ -47,11 +47,22 @@ class Model{
         return $this->query("SELECT * FROM ".$table. " WHERE id = :id LIMIT 1",[ "id" => $id]);
     }
 
+    protected function fetchByColumn(string $table, array $params){
+
+        if(count($params) > 1){
+            $setKeys = implode("= ? AND ",array_keys($params))."= ?";
+        }else{
+            $setKeys = array_keys($params)[0]." = ?";
+        }
+
+        return $this->query("SELECT * FROM ".$table. " WHERE ".$setKeys." LIMIT 1",array_values($params));
+    }
+
     protected function insert(string $table, array $params){
 
         if(count($params) > 1){
             $keys = implode(",",array_keys($params));
-            $values = rtrim(str_repeat("? ,"),",");
+            $values = rtrim(str_repeat(" ? ,",count($params)),",");
         }else{
             $keys = array_keys($params)[0];
             $values = "?";
@@ -60,7 +71,7 @@ class Model{
         return $this->query("INSERT INTO ".$table." (".$keys.") VALUES (".$values.")", array_values($params));
     }
 
-    protected function updateById(string $table, int $id, $params){
+    protected function updateById(string $table, int $id, array $params){
 
         if(count($params) > 1){
             $setKeys = implode("= ? AND ",array_keys($params))."= ?";
