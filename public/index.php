@@ -1,6 +1,11 @@
 <?php
 
 require_once '../core/config.php';
+
+require_once '../helpers/validation.php';
+require_once '../helpers/request.php';
+require_once '../helpers/auth.php';
+
 require_once '../core/Controller.php';
 require_once '../core/View.php';
 require_once '../core/Model.php';
