@@ -4,6 +4,7 @@ class AuthController extends Controller {
 
     public function main(){
 
+        auth::prohibited();
         return $this->view("login");
     }
 

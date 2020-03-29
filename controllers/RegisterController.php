@@ -14,7 +14,6 @@ class RegisterController extends Controller{
 
         request::post();
 
-
         $email = $_POST["email"];
         $password = $_POST["password"];
         $passwordR = $_POST["password_r"];
