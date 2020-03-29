@@ -19,21 +19,21 @@ class Bootstrap {
         });
 
         if(!file_exists(CDIR.'/controllers/'.$this->controller.'.php')){
-            exit("404");
+            abort::it();
         }
 
         require_once CDIR.'/controllers/'.$this->controller.'.php';
 
         if(!class_exists($this->controller)){
-            exit("404");
+            abort::it();
         }
 
         if (!method_exists($this->controller,$this->action)){
-            exit("404");
+            abort::it();
         }
 
         if(($this->action == "create" OR $this->action == "update")  AND ! $_POST){
-            exit("404");
+            abort::it();
         }
 
         $controller =  new $this->controller();
