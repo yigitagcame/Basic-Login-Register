@@ -2,6 +2,7 @@
 
 require_once '../core/config.php';
 
+require_once '../helpers/abort.php';
 require_once '../helpers/validation.php';
 require_once '../helpers/request.php';
 require_once '../helpers/auth.php';
