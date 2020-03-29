@@ -7,7 +7,7 @@ abstract class Controller{
             require_once CDIR.'/views/'.$view.'.php';
             return;
         }else{
-            exit("404");
+            abort::it();
         }
     }
 
@@ -16,15 +16,13 @@ abstract class Controller{
         $model = ucfirst(strtolower($model));
 
         if(!file_exists(CDIR.'/models/'.$model.'.php')){
-
-            exit("404");
+            abort::it();
         }
 
         require_once CDIR.'/models/'.$model.'.php';
 
         if(!class_exists($model)){
-            echo $model;
-            exit("404");
+            abort::it();
         }
 
 
