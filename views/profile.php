@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Profile</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900&display=swap" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="<?= View::asset('css/style.css'); ?>">
 </head>
