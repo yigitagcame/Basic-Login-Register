@@ -14,32 +14,52 @@ class RegisterController extends Controller{
 
         request::post();
 
+
+        $name = $_POST["name"];
         $email = $_POST["email"];
         $password = $_POST["password"];
-        $passwordR = $_POST["password_r"];
 
         $validation = validation::validate([
+            $name => "name",
             $email => "email",
-            $password => "password",
-            $passwordR => "password"
+            $password => "password"
         ]);
 
-        $passCompare = validation::passCompare($password,$passwordR);
-
-
-        if(count($validation) > 0 OR !$passCompare){
-            exit("404");
+        if(count($validation) > 0){
+            $this->addResMessage($validation);
+            $this->sendResponse();
         }
 
         $userModel = $this->model("User");
 
+        $userData =  $userModel->getByColumn([
+            "email" => $_POST["email"]
+        ]);
+
+        if($userModel->isError()){
+            $this->addResMessage([ERROR_UNEXPECTED]);
+            $this->sendResponse();
+        }
+
+        if($userData){
+            $this->addResMessage([ERROR_EMAIL_DUPLICATE]);
+            $this->sendResponse();
+        }
+
         $createUser = $userModel->create([
+            "name" => $name,
             "email" => $email,
             "password" => md5($password)
         ]);
 
         if($createUser){
-            header("location:".URL."/auth");
+            session_start();
+            $_SESSION["auth"] = true;
+            $_SESSION["name"] = $name;
+            $_SESSION["email"] = $email;
+
+            $this->addResRedirect( "user/profile");
+            $this->sendResponse();
         }
 
     }
