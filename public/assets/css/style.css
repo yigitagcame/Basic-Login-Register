@@ -1,0 +1,412 @@
+:root{
+    --letterSpacing:0.32px;
+    --c-aquaBlue:#49abfe;
+    --c-pictonBlue:#429ceb;
+    --c-text:#ffffff;
+    --c-saffron:#F8BF35;
+    --c-pirateGold:#f6af09;
+    --c-seaBuckthorn:#F89A35;
+    --c-black:rgba(15, 26, 47, 0.9);
+
+    --u-mail: url("../img/icons/mail.svg") no-repeat;
+    --u-mail-a: url("../img/icons/mail-active.svg") no-repeat;
+
+    --u-password: url("../img/icons/password.svg") no-repeat;
+    --u-password-a: url("../img/icons/password-active.svg") no-repeat;
+
+    --u-user: url("../img/icons/user.svg") no-repeat;
+    --u-user-a: url("../img/icons/user-active.svg") no-repeat;
+
+
+}
+*{
+    box-sizing: border-box;
+    font-weight: inherit;
+}
+
+
+body{
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background: url("../img/bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: var(--c-text);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: lighter;
+    margin: 0;
+}
+
+a{
+    color:#8495b7;
+    text-decoration: none;
+}
+
+a:hover{
+    color: var(--c-aquaBlue);
+}
+
+input:focus, button:focus{
+    outline: none;
+}
+
+/* Icons */
+
+.email{
+    background: var(--u-mail);
+    display: block;
+    height: 17px;
+    width: 16px;
+}
+
+.password{
+    background: url("../img/icons/password.svg") no-repeat;
+    display: block;
+    height: 17px;
+    width: 16px;
+}
+
+.user{
+    background: url("../img/icons/user.svg") no-repeat;
+    display: block;
+    height: 17px;
+    width: 14px;
+}
+
+.alert{
+    color:red;
+}
+
+.button{
+    border-radius: 25px;
+    color: var(--c-text);
+    display:inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    height: 50px;
+    width: 140px;
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.hr{
+    width: 40px;
+    height: 2px;
+    background: var(--c-aquaBlue);
+    border:none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+
+@media all and (min-width:768px) {
+    .viewport{
+        height: 100vh;
+    }
+}
+
+.viewport{
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    max-width: 920px;
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+}
+/* Black Box */
+.blackBox {
+    background-color: var(--c-black);
+    display: flex;
+    max-width: 920px;
+    min-height: 400px;
+    justify-content: center;
+    width: 100%;
+}
+
+.blackBox.nonSplit{
+    display: none;
+}
+
+@media all and (min-width: 768px){
+
+    .blackBox.nonSplit{
+        display: flex;
+    }
+}
+
+
+/* Message */
+
+.message{
+    background-color: var(--c-saffron);
+    border: 1px var(--c-pirateGold) solid;
+    position: absolute;
+    top: 5%;
+    width: 80%;
+    z-index: 2;
+    display: none;
+    padding: 1%;
+}
+
+.message.success{
+    background: var(--c-aquaBlue);
+    border: 1px var(--c-pictonBlue) solid;
+    display: block;
+}
+
+/* Info Box */
+.infoBox{
+    padding: 5% 7% 7% 10%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.infoBox h2{
+    font-size: 28px;
+    line-height: 35px;
+    letter-spacing: var(--letterSpacing);
+}
+
+.infoBox p{
+    letter-spacing: var(--letterSpacing);
+    line-height: 35px;
+}
+
+.infoBox button{
+    background: transparent;
+    border: 1px solid var(--c-aquaBlue);
+}
+
+.infoBox button:hover{
+    background: var(--c-aquaBlue);
+}
+
+
+/* LoginForm */
+.whiteBox{
+    background: white;
+    color: #3e495e;
+    padding: 8.5% 7.5%;
+
+}
+
+.whiteBox.full{
+    width: 100%;
+    padding-top:2%;
+    padding-bottom: 2%;
+    margin-bottom: 2%;
+    height: auto;
+}
+
+@media all and (min-width:768px) {
+    .whiteBox{
+        position: absolute;
+        transition: transform 0.3s ease-in-out;
+        left: 50%;
+        top:-10%;
+        width: 45%;
+        height: 120%;
+    }
+    .whiteBox.login{
+        transform: translateX(0);
+    }
+
+    .whiteBox.singUp{
+        transform: translateX(-100%);
+        padding: 3% 7.5%;
+    }
+
+    .whiteBox.login::after,.whiteBox.singUp::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: -20px;
+        z-index: -1;
+        background: rgba(255, 255, 255, 0.1);
+        clip-path: polygon(5% 0%, 100% 0, 100% 60%, 100% 100%, 5% 100%, 0 91.5%, 0 8.5%);
+    }
+
+    .whiteBox.full{
+        left: 5%;
+        width: 90%;
+        padding-top:2%;
+        padding-bottom: 2%;
+        margin-bottom: 2%;
+        height: auto;
+    }
+
+}
+
+.whiteBox.full .headLiner a{
+    align-self: center;
+}
+
+.whiteBox.full form{
+    padding: 0;
+}
+
+.whiteBox.full .inputField{
+    border: none;
+    justify-content: space-between;
+    display: flex;
+}
+
+.whiteBox.full .titleField{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 50px 0 20px;
+}
+
+.whiteBox.full .titleField h2{
+    width: 40%;
+    margin: 0;
+    padding: 0;
+    justify-content: flex-start;
+}
+
+.whiteBox.full .inputField input{
+    width: 40%;
+    border-bottom: 1px #cbd2df solid;
+}
+
+.whiteBox.full .action{
+    background: var(--c-black);
+    border: none;
+}
+
+.whiteBox.full .action:hover{
+    border: 1px solid var(--c-aquaBlue);
+}
+
+.whiteBox.full .delete{
+    font-size: 8px;
+    width: 16%;
+}
+
+@media all and (min-width: 728px){
+    .whiteBox.full .delete{
+        font-size: 13px;
+        width: 80px;
+    }
+}
+
+.whiteBox .headLiner{
+    display: flex;
+    justify-content: space-between;
+}
+
+.whiteBox h2{
+    width: 50%;
+}
+
+.whiteBox form{
+    padding: 10% 0;
+}
+
+.whiteBox form.hide{
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+.whiteBox form.show{
+    transition: opacity 0.3s;
+    opacity: 1;
+}
+
+.singUpForm{
+    display: none;
+}
+
+.whiteBox form .inputField{
+    margin-bottom: 25px;
+
+    border-bottom: 1px #cbd2df solid;
+}
+.whiteBox form .inputField:focus-within label{
+    font-size:11px;
+    font-weight: 700;
+    color:#8495b7;
+}
+
+.whiteBox form .inputField:focus-within .email{
+    background: var(--u-mail-a);
+}
+
+.whiteBox form .inputField:focus-within .password{
+    background: var(--u-password-a);
+}
+
+.whiteBox form .inputField:focus-within .user{
+    background: var(--u-user-a);
+}
+
+.whiteBox form label{
+    display: block;
+}
+
+.whiteBox form input{
+    width: 80%;
+    border: 0;
+    height: 30px
+}
+
+.whiteBox form .inputField:focus-within input{
+    height: 33px;
+}
+
+.whiteBox form .textPlace{
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.whiteBox form .submit{
+    background-color: var(--c-seaBuckthorn);
+    border: 1px solid var(--c-seaBuckthorn);
+}
+
+.whiteBox form .submit:hover{
+    background: var(--c-saffron);
+    border: 1px solid var(--c-saffron);
+}
+
+.whiteBox form .submitField{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    border: 0;
+}
+
+@media all and (min-width:768px) {
+    .copyright{
+        position: absolute;
+        bottom:10px;
+        width: 100%;
+    }
+}
+
+/* Copyright */
+
+.copyright{
+    text-align: center;
+    color: #a7b3cb;
+    line-height: 35px;
+    font-size:13px;
+    font-weight: 700;
+    letter-spacing: 1.56px;
+}
+
