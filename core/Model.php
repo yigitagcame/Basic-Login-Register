@@ -2,7 +2,10 @@
 
 class Model{
 
-    public object $pdo;
+    private object $pdo;
+    private bool $error = false;
+    private bool $errorMessage;
+
 
     public function __construct(){
 
@@ -17,7 +20,8 @@ class Model{
         try {
             $this->pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
         } catch (\PDOException $e) {
-            throw new \PDOException($e->getMessage(), (int)$e->getCode());
+            $this->error = true;
+            $this->errorMessage = $e->getMessage();
         }
 
     }
@@ -25,6 +29,11 @@ class Model{
     public function query(string $query,array $params = null,bool $all = false){
 
         $statementType = strtoupper(explode(" ",$query)[0]);
+
+        if($this->error){
+            return false;
+        }
+
         $stmt = $this->pdo->prepare($query);
         $exec = $stmt->execute($params);
 
@@ -90,5 +99,15 @@ class Model{
 
         return $this->query("DELETE FROM ".$table. " WHERE id = :id",[ "id" => $id]);
     }
+
+    public function isError(){
+        return $this->error;
+    }
+
+    public function getError(){
+        return $this->errorMessage;
+    }
+
+
 
 }
