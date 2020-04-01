@@ -6,10 +6,10 @@ class AuthController extends Controller {
 
         auth::prohibited();
         return $this->view("login");
+
     }
 
     public function login(){
-
         request::post();
 
         $email = $_POST["email"];
@@ -20,9 +20,9 @@ class AuthController extends Controller {
             $password => "password"
         ]);
 
-
         if(count($validation) > 0){
-            exit("404");
+            $this->addResMessage($validation);
+            $this->sendResponse();
         }
 
         $userModel = $this->model("User");
@@ -31,14 +31,23 @@ class AuthController extends Controller {
             "password" => md5($_POST["password"])
         ]);
 
-        if(!$userData){
-            exit("404");
+        if($userModel->isError()){
+            $this->addResMessage([ERROR_UNEXPECTED]);
+            $this->sendResponse();
         }
+
+        if(!$userData){
+            $this->addResMessage([ERROR_LOGIN]);
+            $this->sendResponse();
+        }
+
         session_start();
         $_SESSION["auth"] = true;
-        $_SESSION["email"] = $email;
+        $_SESSION["name"] = $userData["name"];
+        $_SESSION["email"] = $userData["email"];
 
-        header("location:".URL);
+        $this->addResRedirect( "user/profile");
+        $this->sendResponse();
 
 
     }
@@ -49,7 +58,7 @@ class AuthController extends Controller {
         unset($_SESSION["auth"]);
         unset($_SESSION["email"]);
         session_destroy();
-        header("location:".URL);
+        redirect::to('');
         exit();
 
     }

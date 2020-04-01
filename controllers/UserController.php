@@ -3,6 +3,7 @@
 class UserController extends Controller{
 
     private object $userModel;
+    private object $attrModel;
     private array $user;
 
     public function __construct(){
@@ -10,19 +11,20 @@ class UserController extends Controller{
         auth::required();
 
         $this->userModel = $this->model("user");
+        $this->attrModel = $this->model("attr");
 
         $this->user = $this->userModel->getByColumn(["email" => $_SESSION["email"]]);
     }
 
     public function main(){
 
-        header("location:".URL."/user/profile");
+        redirect::to("user/profile");
 
     }
 
     public function profile(){
 
-        $attrs = $this->userModel->getAttr($this->user["id"]);
+        $attrs = $this->attrModel->get($this->user["id"]);
 
         $this->view("profile", ["attrs" => $attrs]);
 
@@ -48,30 +50,30 @@ class UserController extends Controller{
                 "user_id" => $this->user["id"]
             ];
 
-
-
             if($ids[$i] == "0"){
-
-                $this->userModel->setAttr($attrArray);
+                $this->attrModel->set($attrArray);
             }else{
-                $this->userModel->updateAttr($ids[$i],$attrArray);
+                $this->attrModel->update($ids[$i],$attrArray);
             }
 
 
         }
 
-        header("location:".URL."/user/profile");
+        $_SESSION["message"] = ATTR_UPDATED;
+
+        redirect::to("user/profile");
 
     }
 
     public function attr(int $id){
 
-        $userAttr = $this->userModel->confirmAttr(["id" => $id, "user_id" => $this->user["id"]]);
+        $userAttr = $this->attrModel->confirm(["id" => $id, "user_id" => $this->user["id"]]);
 
         if(count($userAttr) > 0){
-            $this->userModel->removeAttr($id);
+            $this->attrModel->remove($id);
 
             echo "1"; // True for JS
+            exit();
 
         }else{
             abort::it();
