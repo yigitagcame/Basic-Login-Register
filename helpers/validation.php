@@ -6,32 +6,35 @@ class validation{
     public static function validate(array $fields){
       $_messages = [];
 
-      //var_dump($fields);
-
       foreach ($fields as $field => $type){
 
           switch ($type){
+
+              case "name":
+
+                  if(!self::name($field)){
+                      $_messages[] =  [ERROR_NAME];
+                  }
+
+                  break;
+
               case "email":
 
-                  if(!$result = self::email($field)){
-                      $_messages[] = [
-                          "field" => $field,
-                          "type" => $type
-                      ];
+                  if(!self::email($field)){
+                      $_messages[] = [ERROR_EMAIL];
                   }
 
                   break;
 
               case "password":
 
-                  if(!$result = self::password($field)){
-                      $_messages[] = [
-                          "field" => $field,
-                          "type" => $type
-                      ];
+                  if(!self::password($field)){
+                      $_messages[] =  [ERROR_PASSWORD];
                   }
 
                   break;
+
+
 
           }
       }
@@ -43,36 +46,11 @@ class validation{
     public static function email(string $email){
 
 
-        if (!strpos($email,"@") OR !strpos($email,".")){
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             return false;
+        }else{
+            return true;
         }
-
-
-        $sEmail = explode("@",$email);
-
-        if(count($sEmail) != 2){
-            return false;
-        }
-
-        if ((strlen($sEmail[0]) < 1) OR !ctype_alnum($sEmail[0]) ){
-            return false;
-        }
-
-        $sEmailDomain = explode(".",$sEmail[1]);
-
-        if(count($sEmailDomain) != 2){
-            return false;
-        }
-
-        if ((strlen($sEmailDomain[0]) < 3) OR !ctype_alnum($sEmailDomain[0])){
-            return false;
-        }
-
-        if ((strlen($sEmailDomain[1]) < 2) OR !ctype_alnum($sEmailDomain[1])){
-            return false;
-        }
-
-        return true;
 
 
     }
@@ -90,15 +68,26 @@ class validation{
 
     }
 
-    public static function passCompare(string $password,string $passwordR){
+    public static function name(string $name){
 
-        if ($password == $passwordR){
-            return true;
-        }else{
+        if(!preg_match("/^[a-zA-Z ]*$/",$name) OR $name == ''){
             return false;
+        }else{
+            return true;
         }
 
     }
+
+    public static function passCompare(string $password,string $passwordR){
+
+        if ($password != $passwordR){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
 
 
 }
